@@ -27,6 +27,7 @@ class Index extends Template implements BlockInterface
 
     public function getDataBlocks()
     {
+
         $portfolio = $this->_collection;
         $items = $portfolio->getItems();
         foreach($items as $item)

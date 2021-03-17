@@ -64,5 +64,4 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         $this->addFilterToMap('id', 'main_table.id');
         return $this;
     }
-
 }
