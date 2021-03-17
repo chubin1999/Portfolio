@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!-- Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="AHT\Portfolio\Api\Data\PortfolioSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 
     <virtualType name="AHT\Portfolio\Model\ResourceModel\Portfolio\Grid\Collection">
         <arguments>
@@ -16,4 +15,12 @@
             <argument name="resourceModel" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Category</argument>
         </arguments>
     </virtualType>
+    <!-- Fix for ui_component portfolio_index_listing.xml -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="portfolio_index_listing_data_source" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Portfolio\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

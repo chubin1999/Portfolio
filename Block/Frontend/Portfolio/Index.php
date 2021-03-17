@@ -4,7 +4,7 @@ namespace AHT\Portfolio\Block\Frontend\Portfolio;
 use Magento\Framework\View\Element\Template;
 use Magento\Widget\Block\BlockInterface;
 use Magento\Framework\View\Element\Template\Context;
-use AHT\Portfolio\Model\ResourceModel\Portfolio\Grid\CollectionFactory;
+use AHT\Portfolio\Model\ResourceModel\Portfolio\CollectionFactory;
 
 class Index extends Template implements BlockInterface
 {
