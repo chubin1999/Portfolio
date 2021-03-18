@@ -1,7 +1,9 @@
 <?php
 namespace AHT\Portfolio\Model;
 
-class Portfolio extends \Magento\Framework\Model\AbstractModel {
+use AHT\Portfolio\Api\Data\PortfolioInterface;
+
+class Portfolio extends \Magento\Framework\Model\AbstractModel implements PortfolioInterface {
     public function __construct(
    	 \Magento\Framework\Model\Context $context,
    	 \Magento\Framework\Registry $registry,

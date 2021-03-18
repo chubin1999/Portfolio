@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace AHT\Portfolio\Model\Block;
+namespace AHT\Portfolio\Model\Portfolio;
 
 use AHT\Portfolio\Model\ResourceModel\Portfolio\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;

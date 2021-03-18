@@ -72,12 +72,12 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
             $this->loadedData[$block->getId()] = $block->getData();
         }
 
-        $data = $this->dataPersistor->get('cms_block');
+        $data = $this->dataPersistor->get('category');
         if (!empty($data)) {
             $block = $this->collection->getNewEmptyItem();
             $block->setData($data);
             $this->loadedData[$block->getId()] = $block->getData();
-            $this->dataPersistor->clear('cms_block');
+            $this->dataPersistor->clear('category');
         }
 
         return $this->loadedData;

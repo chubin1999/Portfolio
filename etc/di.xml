@@ -23,4 +23,5 @@
             </argument>
         </arguments>
     </type>
+    <preference for="AHT\Portfolio\Api\PortfolioRepositoryInterface" type="AHT\Portfolio\Model\PortfolioRepository" />
 </config>
