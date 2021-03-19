@@ -4,7 +4,6 @@
  * See COPYING.txt for license details.
  */
 namespace AHT\Portfolio\Controller\Adminhtml;
-
 abstract class Portfolio extends \Magento\Backend\App\Action
 {
     /**

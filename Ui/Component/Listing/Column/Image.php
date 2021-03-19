@@ -14,7 +14,7 @@ class Image extends \Magento\Ui\Component\Listing\Columns\Column
      * @var \PHPCuong\portfolioSlider\Model\portfolio
      */
     protected $portfolio;
-protected $_storeManager;
+    protected $_storeManager;
     /**
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
@@ -51,9 +51,9 @@ protected $_storeManager;
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
                 $portfolio = new \Magento\Framework\DataObject($item);
-                $item[$fieldName . '_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/image/".$portfolio['images'];
-                $item[$fieldName . '_orig_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/image/".$portfolio['images'];
-                $item[$fieldName . '_link'] = $this->urlBuilder->getUrl("portfolio/image/edit",
+                $item[$fieldName . '_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/index/".$portfolio['images'];
+                $item[$fieldName . '_orig_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/index/".$portfolio['images'];
+                $item[$fieldName . '_link'] = $this->urlBuilder->getUrl("portfolio/index/edit",
                     ['id' => $portfolio['id']]
                 );
                 $item[$fieldName . '_alt'] = $portfolio['name'];

@@ -7,23 +7,25 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
 {
     public function getButtonData()
     {
-        return [
-            'label' => __('Xóa '),
-            'on_click' => 'deleteConfirm(\'' . __('Bạn có chắc chắn muốn xóa Portfolio này ?') . '\', \'' . $this->getDeleteUrl() . '\')',
-            'class' => 'delete',
-            'sort_order' => 20
-        ];
+        $data = [];
+        if ($this->getPortfolioId()) {
+            $data = [
+                'label' => __('Delete'),
+                'class' => 'delete',
+                'on_click' => 'deleteConfirm(\'' . __(
+                    'Are you sure you want to do this?'
+                ) . '\', \'' . $this->getDeleteUrl() . '\')',
+                'sort_order' => 20,
+            ];
+        }
+        return $data;
     }
 
+    /**
+     * @return string
+     */
     public function getDeleteUrl()
     {
-        $urlInterface = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\UrlInterface');
-        $url = $urlInterface->getCurrentUrl();
-
-        $parts = explode('/', parse_url($url, PHP_URL_PATH));
-
-        $id = $parts[6];
-
-        return $this->getUrl('*/*/delete', ['id' => $id]);
+        return $this->getUrl('*/*/delete', ['id' => $this->getPortfolioId()]);
     }
 }

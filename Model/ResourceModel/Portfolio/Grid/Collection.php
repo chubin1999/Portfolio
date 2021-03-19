@@ -60,7 +60,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             'main_table.categoryid = AHT_Categories.id',
             [
                 'AHT_Categories.name'
-            ]);          
+            ]);
         $this->addFilterToMap('id', 'main_table.id');
         return $this;
     }

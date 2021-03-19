@@ -1,17 +1,10 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace AHT\Portfolio\Block\Adminhtml\Portfolio\Edit;
 
 use Magento\Backend\Block\Widget\Context;
-use Magento\Cms\Api\BlockRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-/**
- * Class GenericButton
- */
 class GenericButton
 {
     /**
@@ -20,36 +13,31 @@ class GenericButton
     protected $context;
 
     /**
-     * @var BlockRepositoryInterface
      */
-    protected $blockRepository;
+    protected $authorRepository;
 
     /**
      * @param Context $context
-     * @param BlockRepositoryInterface $blockRepository
      */
     public function __construct(
-        Context $context,
-        BlockRepositoryInterface $blockRepository
+        Context $context
     ) {
         $this->context = $context;
-        $this->blockRepository = $blockRepository;
+   
     }
 
     /**
-     * Return CMS block ID
+     * Return Author page ID
      *
      * @return int|null
      */
-    public function getBlockId()
+    public function getPortfolioId()
     {
         try {
-            return $this->blockRepository->getById(
-                $this->context->getRequest()->getParam('id')
-            )->getId();
+            return  $this->context->getRequest()->getParam('id');
         } catch (NoSuchEntityException $e) {
+            return null;
         }
-        return null;
     }
 
     /**

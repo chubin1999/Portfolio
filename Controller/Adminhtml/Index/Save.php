@@ -13,6 +13,7 @@ use Magento\Framework\Registry;
 use AHT\Portfolio\Api\PortfolioRepositoryInterface;
 use AHT\Portfolio\Model\Portfolio;
 use AHT\Portfolio\Model\PortfolioFactory;
+use AHT\Portfolio\Model\Portfolio\ImageUploader;
 
 /**
  * Save CMS block action.
@@ -35,17 +36,23 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
     private $blockRepository;
 
     /**
+     * @var ImageUploader
+     */
+    protected $imageUploader;
+    /**
      * @param Context $context
      * @param Registry $coreRegistry
      * @param DataPersistorInterface $dataPersistor
      * @param BlockFactory|null $blockFactory
      * @param BlockRepositoryInterface|null $blockRepository
+     * @param ImageUploader $imageUploader
      */
     public function __construct(
         Context $context,
         Registry $coreRegistry,
         DataPersistorInterface $dataPersistor,
         PortfolioFactory $blockFactory = null,
+        ImageUploader $imageUploader,
         PortfolioRepositoryInterface $blockRepository = null
     ) {
         $this->dataPersistor = $dataPersistor;
@@ -53,7 +60,8 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
             ?: \Magento\Framework\App\ObjectManager::getInstance()->get(PortfolioFactory::class);
         $this->blockRepository = $blockRepository
             ?: \Magento\Framework\App\ObjectManager::getInstance()->get(PortfolioRepositoryInterface::class);
-        parent::__construct($context, $coreRegistry);
+        $this->imageUploader = $imageUploader;
+        parent::__construct($context, $coreRegistry);  
     }
 
     /**
@@ -71,10 +79,17 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
             /*if (isset($data['is_active']) && $data['is_active'] === 'true') {
                 $data['is_active'] = Block::STATUS_ENABLED;
             }*/
+
             if (empty($data['id'])) {
                 $data['id'] = null;
             }
-
+            if (isset($data['images'])) {
+                $imageName = $data['images'];
+            }
+            if (isset($data['image'][0]['name'])) {
+                
+                $imageName = $data['image'][0]['name'];
+            }
             /** @var \Magento\Cms\Model\Block $model */
             $model = $this->blockFactory->create();
 
@@ -87,13 +102,18 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
                     return $resultRedirect->setPath('*/*/');
                 }
             }
+            //Get name of images in database
+            $data['images'] = $imageName[0]['name'];
+            $imageName = $imageName[0]['name'];
 
             $model->setData($data);
-
             try {
                 $this->blockRepository->save($model);
                 $this->messageManager->addSuccessMessage(__('You saved the block.'));
                 $this->dataPersistor->clear('fortfolio');
+                if ($imageName) {
+                    $this->imageUploader->moveFileFromTmp($imageName);
+                }
                 return $this->processBlockReturn($model, $data, $resultRedirect);
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
