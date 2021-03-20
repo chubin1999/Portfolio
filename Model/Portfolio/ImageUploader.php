@@ -195,17 +195,15 @@ class ImageUploader
         $baseImagePath = $this->getFilePath($basePath, $imageName);
         $baseTmpImagePath = $this->getFilePath($baseTmpPath, $imageName);
         try {
-            if ($baseTmpImagePath!='') {
-                $this->coreFileStorageDatabase->copyFile(
-                    $baseTmpImagePath,
-                    $baseImagePath
-                );
-                
-                $this->mediaDirectory->renameFile(
-                    $baseTmpImagePath,
-                    $baseImagePath
-                );
-            }
+            $this->coreFileStorageDatabase->copyFile(
+                $baseTmpImagePath,
+                $baseImagePath
+            );
+            
+            $this->mediaDirectory->renameFile(
+                $baseTmpImagePath,
+                $baseImagePath
+            );
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('Something went wrong while saving the file(s).')
@@ -222,13 +220,13 @@ class ImageUploader
      *
      * @deprecated 101.1.0
      */
-    private function getFileInfo()
+    /*private function getFileInfo()
     {
         if ($this->fileInfo === null) {
             $this->fileInfo = ObjectManager::getInstance()->get(FileInfo::class);
         }
         return $this->fileInfo;
-    }
+    }*/
 
     /**
      * Checking file for save and save it to tmp dir
@@ -249,7 +247,7 @@ class ImageUploader
         $uploader->setAllowRenameFiles(true);
 
         $result = $uploader->save($this->mediaDirectory->getAbsolutePath($baseTmpPath));
-        unset($result['path']);
+        /*unset($result['path']);*/
 
         if (!$result) {
             throw new \Magento\Framework\Exception\LocalizedException(

@@ -68,8 +68,18 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         }
         $items = $this->collection->getItems();
         /** @var \Magento\Cms\Model\Block $block */
-        foreach ($items as $block) {
-            $this->loadedData[$block->getId()] = $block->getData();
+        foreach ($items as $item) {
+            /*$this->loadedData[$block->getId()] = $block->getData();*/
+            $_data = $item->getData();
+            $item->load($item->getId());
+            if (isset($_data['image'])) {
+                $image = [];
+                $image[0]['name'] = $item->getImagePath();
+                $image[0]['url'] = $this->imageModel->getMediaUrl().'item/image'.$item->getImagePath();
+                $_data['image'] = $image;
+            }
+            $item->setData($_data);
+            $this->loadedData[$item->getId()] = $_data;
         }
 
         $data = $this->dataPersistor->get('index');

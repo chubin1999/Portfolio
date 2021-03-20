@@ -10,7 +10,7 @@ use Magento\Ui\Component\Listing\Columns\Column;
 /**
  * @method AuthorActions setName($name)
  */
-class PorfolioActions extends Column
+class PortfolioActions extends Column
 {
     /**
      * Url path  to edit

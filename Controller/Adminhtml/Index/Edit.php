@@ -63,12 +63,12 @@ class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
         // 5. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-/*
+
         $this->initPage($resultPage)->addBreadcrumb(
             $id ? __('Edit Block') : __('New Block'),
             $id ? __('Edit Block') : __('New Block')
         );
-        */
+        
         $resultPage->getConfig()->getTitle()->prepend(__('All Portfolio'));
         $resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('New Portfolio'));
         return $resultPage;

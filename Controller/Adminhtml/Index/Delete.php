@@ -1,46 +1,48 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace AHT\Portfolio\Controller\Adminhtml\Index;
 
-use Magento\Framework\App\Action\HttpPostActionInterface;
-
-class Delete extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements HttpPostActionInterface
+class Delete extends \Magento\Backend\App\Action
 {
     /**
-     * Delete action
+     * Authorization level of a basic admin session
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @see _isAllowed()
+     */
+
+
+    /**
+     * Delete Banner
+     *
+     * @return \Magento\Framework\View\Result\PageFactory
      */
     public function execute()
     {
+        // check if we know what should be deleted
+        $bannerId = (int)$this->getRequest()->getParam('id');
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
-        // check if we know what should be deleted
-        $id = $this->getRequest()->getParam('id');
-        if ($id) {
+        if ($bannerId && (int) $bannerId > 0) {
             try {
-                // init model and delete
-                $model = $this->_objectManager->create(\AHT\Portfolio\Model\Portfolio::class);
-                $model->load($id);
+                $model = $this->_objectManager->create('AHT\Portfolio\Model\Portfolio');
+                $model->load($bannerId);
                 $model->delete();
-                // display success message
-                $this->messageManager->addSuccessMessage(__('The Portfolio has been deleted successfully.'));
-                // go to grid
+                $this->messageManager->addSuccess(__('The Portfolio has been deleted successfully.'));
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
                 // display error message
-                $this->messageManager->addErrorMessage($e->getMessage());
-                // go back to edit form
-                return $resultRedirect->setPath('*/*/edit', ['id' => $id]);
+                $this->messageManager->addError($e->getMessage());
+                // go back to the question grid
+                return $resultRedirect->setPath('*/*/index');
             }
         }
         // display error message
-        $this->messageManager->addErrorMessage(__('We can\'t find a block to delete.'));
-        // go to grid
+        $this->messageManager->addError(__('Portfolio doesn\'t exist any longer.'));
+        // go to the question grid
         return $resultRedirect->setPath('*/*/index');
     }
+    /*protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('AHT_Portfolio::delete');
+    }*/
 }

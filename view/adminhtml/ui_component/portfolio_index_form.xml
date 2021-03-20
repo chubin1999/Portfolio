@@ -72,7 +72,7 @@
             </argument>
         </field>
 
-        <field name="images" sortOrder="2" formElement="imageUploader">
+        <field name="images" sortOrder="2" formElement="imageUploader" >
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">index</item>
