@@ -9,7 +9,7 @@
         </arguments>
     </virtualType>
 
-     <virtualType name="AHT\Portfolio\Model\ResourceModel\Category\Grid\Collection">
+    <virtualType name="AHT\Portfolio\Model\ResourceModel\Category\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">AHT_Categories</argument>
             <argument name="resourceModel" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Category</argument>
@@ -35,13 +35,9 @@
                 <item name="jpeg" xsi:type="string">jpeg</item>
                 <item name="gif" xsi:type="string">gif</item>
                 <item name="png" xsi:type="string">png</item>
+                <item name="svg" xsi:type="string">svg</item>
             </argument>
         </arguments>
     </virtualType>
-   <!--  <type name="AHT\Portfolio\Controller\Adminhtml\Index\Uploader">
-        <arguments>
-            <argument name="imageUploader" xsi:type="object">VirtualTypeName</argument>
-        </arguments>
-    </type> -->
 
 </config>

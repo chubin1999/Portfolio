@@ -1,50 +1,35 @@
-<?php
+<?php 
 namespace AHT\Portfolio\Controller\Adminhtml\Index;
 
-use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\Action\HttpGetActionInterface;
-use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-/**
- * Class Index
- */
-class Index extends Action implements HttpGetActionInterface
+class Index extends \Magento\Backend\App\Action
 {
-    const MENU_ID = 'AHT_Portfolio::portfolio';
-
-    /**
-     * @var PageFactory
-     */
     protected $resultPageFactory;
-
-    /**
-     * Index constructor.
-     *
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
-     */
+    
+    const ADMIN_RESOURCE = "AHT_Portfolio::index";
+    
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory
     ) {
         parent::__construct($context);
-
         $this->resultPageFactory = $resultPageFactory;
     }
 
-    /**
-     * Load the page defined in view/adminhtml/layout/exampleadminnewpage_helloworld_index.xml
-     *
-     * @return Page
-     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('AHT_Portfolio::index');
+    }
+
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu(static::MENU_ID);
+        $resultPage->setActiveMenu('AHT_Portfolio:portfolio');
+        $resultPage->addBreadcrumb(__('Portfolio'), __('Portfolio'));
+        $resultPage->addBreadcrumb(__('Manage Portfolio'), __('Manage Portfolio'));
         $resultPage->getConfig()->getTitle()->prepend(__('Portfolio'));
-
         return $resultPage;
-    }
+    } 
 }

@@ -86,9 +86,8 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
             if (isset($data['images'])) {
                 $imageName = $data['images'];
             }
-            if (isset($data['image'][0]['name'])) {
-                
-                $imageName = $data['image'][0]['name'];
+            if (isset($data['images'][0]['name'])) {
+                $imageName = $data['images'][0]['name'];
             }
             /** @var \Magento\Cms\Model\Block $model */
             $model = $this->blockFactory->create();
@@ -102,13 +101,14 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
                     return $resultRedirect->setPath('*/*/');
                 }
             }
+            
             //Get name of images in database
-            $data['images'] = $imageName[0]['name'];
-            $imageName = $imageName[0]['name'];
-
+            $data['images'] = $imageName;
             $model->setData($data);
+
             try {
                 $this->blockRepository->save($model);
+                /*$model->save();*/
                 $this->messageManager->addSuccessMessage(__('You saved the block.'));
                 $this->dataPersistor->clear('fortfolio');
                 if ($imageName) {

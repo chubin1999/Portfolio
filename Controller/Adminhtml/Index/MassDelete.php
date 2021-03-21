@@ -1,70 +1,79 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Controller\Adminhtml\Block;
+namespace AHT\Portfolio\Controller\Adminhtml\Index;
 
-use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\Controller\ResultFactory;
+use AHT\Portfolio\Model\ResourceModel\Portfolio\CollectionFactory;
+use AHT\Portfolio\Model\PortfolioFactory;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Ui\Component\MassAction\Filter;
-use Magento\Cms\Model\ResourceModel\Block\CollectionFactory;
 
-/**
- * Class MassDelete
- */
-class MassDelete extends \Magento\Backend\App\Action implements HttpPostActionInterface
+class MassDelete extends \Magento\Backend\App\Action
 {
-    /**
-     * Authorization level of a basic admin session
-     *
-     * @see _isAllowed()
-     */
-    const ADMIN_RESOURCE = 'Magento_Cms::block';
-
-    /**
-     * @var Filter
-     */
     protected $filter;
-
-    /**
-     * @var CollectionFactory
-     */
     protected $collectionFactory;
+    protected $_postFactory;
 
-    /**
-     * @param Context $context
-     * @param Filter $filter
-     * @param CollectionFactory $collectionFactory
-     */
-    public function __construct(Context $context, Filter $filter, CollectionFactory $collectionFactory)
-    {
+    public function __construct(
+        Context $context,
+        Filter $filter,
+        CollectionFactory $collectionFactory,
+        PortfolioFactory $_postFactory
+    ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
+        $this->_postFactory = $_postFactory;
         parent::__construct($context);
     }
 
-    /**
-     * Execute action
-     *
-     * @return \Magento\Backend\Model\View\Result\Redirect
-     * @throws \Magento\Framework\Exception\LocalizedException|\Exception
-     */
     public function execute()
     {
-        $collection = $this->filter->getCollection($this->collectionFactory->create());
-        $collectionSize = $collection->getSize();
+        $resultRedirect = $this->resultRedirectFactory->create();
 
-        foreach ($collection as $block) {
-            $block->delete();
+        $CustomData = $this->collectionFactory->create();
+
+        foreach ($CustomData as $value) {
+            $templateId[] = $value['id'];
+        }
+        
+        $parameterData = $this->getRequest()->getParams('id');
+
+        $selectedAppsid = $this->getRequest()->getParams('id');
+
+
+        if (array_key_exists("selected", $parameterData)) {
+            $selectedAppsid = $parameterData['selected'];
         }
 
-        $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been deleted.', $collectionSize));
+        if (array_key_exists("excluded", $parameterData)) {
+            if ($parameterData['excluded'] == 'false') {
+                $selectedAppsid = $templateId;
+                var_dump($selectedAppsid);
+            } else {
+                $selectedAppsid = array_diff($templateId, $parameterData['excluded']);
+            }
+        }
 
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-        $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+        if (!is_array($selectedAppsid)) {
+            $this->messageManager->addError(__('Please select item(s).'));
+
+        } else {
+            try {
+                foreach ($selectedAppsid as $id) {
+                    $model = $this->_postFactory->create()
+                    ->load($id)
+                    ->delete();
+                }
+                $this->messageManager->addSuccess(__('Total of %1 record(s) were successfully deleted.', count($selectedAppsid)));
+
+            } catch (\Exception $e) {
+                $this->messageManager->addError($e->getMessage());
+            }
+        }
         return $resultRedirect->setPath('*/*/');
     }
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('AHT_Portfolio::delete');
+    }
+
 }

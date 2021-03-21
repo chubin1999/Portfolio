@@ -194,6 +194,7 @@ class ImageUploader
 
         $baseImagePath = $this->getFilePath($basePath, $imageName);
         $baseTmpImagePath = $this->getFilePath($baseTmpPath, $imageName);
+
         try {
             $this->coreFileStorageDatabase->copyFile(
                 $baseTmpImagePath,

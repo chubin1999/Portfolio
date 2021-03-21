@@ -12,16 +12,20 @@ class Index extends Template implements BlockInterface
     public $_storeManager;
     public $_customerSession;
 
+    public $_helperData;
+
     public function __construct(
         CollectionFactory $portfolioCollectionFactory,
         \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Customer\Model\Session $customerSession,  
+        \Magento\Customer\Model\Session $customerSession,
+        \AHT\Portfolio\Helper\Data $helperData,  
         array $data = []
 
     )
     {
         parent::__construct($context, $data);
         $this->_customerSession = $customerSession;
+        $this->_helperData = $helperData;
         $this->_collection =  $portfolioCollectionFactory->create();
     }
 

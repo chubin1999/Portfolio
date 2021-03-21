@@ -41,8 +41,4 @@ class Delete extends \Magento\Backend\App\Action
         // go to the question grid
         return $resultRedirect->setPath('*/*/index');
     }
-    /*protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('AHT_Portfolio::delete');
-    }*/
 }

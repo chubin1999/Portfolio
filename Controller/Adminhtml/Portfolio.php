@@ -43,4 +43,8 @@ abstract class Portfolio extends \Magento\Backend\App\Action
             ->addBreadcrumb(__('All Portfolio'), __('All Portfolio'));
         return $resultPage;
     }
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('AHT_Portfolio::index');
+    }
 }
