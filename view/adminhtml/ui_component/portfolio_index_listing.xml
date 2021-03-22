@@ -33,8 +33,8 @@
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <aclResource>AHT_Portfolio::list</aclResource>
-        <dataProvider class="Magento\Cms\Ui\Component\DataProvider" name="portfolio_index_listing_data_source">
+        <aclResource>AHT_Portfolio::page</aclResource>
+        <dataProvider class="AHT\Portfolio\Ui\Component\DataProvider" name="portfolio_index_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
@@ -83,23 +83,9 @@
                         <message translate="true">Are you sure you want to delete selected items?</message>
                         <title translate="true">Delete items</title>
                     </confirm>
-                    <url path="cms/page/massDelete"/>
+                    <url path="portfolio/index/massDelete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
-                </settings>
-            </action>
-            <action name="disable">
-                <settings>
-                    <url path="cms/page/massDisable"/>
-                    <type>disable</type>
-                    <label translate="true">Disable</label>
-                </settings>
-            </action>
-            <action name="enable">
-                <settings>
-                    <url path="cms/page/massEnable"/>
-                    <type>enable</type>
-                    <label translate="true">Enable</label>
                 </settings>
             </action>
             <action name="edit">

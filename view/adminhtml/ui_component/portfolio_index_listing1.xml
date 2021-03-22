@@ -32,7 +32,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>AHT_Portfolio::page</aclResource>
-        <dataProvider class="AHT\Portfolio\Ui\Component\DataProvider" name="portfolio_index_listing_data_source">
+        <dataProvider class="Magento\Cms\Ui\Component\DataProvider" name="portfolio_index_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>

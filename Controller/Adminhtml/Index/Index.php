@@ -1,4 +1,5 @@
 <?php 
+
 namespace AHT\Portfolio\Controller\Adminhtml\Index;
 
 use Magento\Backend\App\Action\Context;
@@ -18,11 +19,6 @@ class Index extends \Magento\Backend\App\Action
         $this->resultPageFactory = $resultPageFactory;
     }
 
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('AHT_Portfolio::index');
-    }
-
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
@@ -32,4 +28,9 @@ class Index extends \Magento\Backend\App\Action
         $resultPage->getConfig()->getTitle()->prepend(__('Portfolio'));
         return $resultPage;
     } 
+
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('AHT_Portfolio::index');
+    }
 }

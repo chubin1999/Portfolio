@@ -6,6 +6,8 @@
         <arguments>
             <argument name="mainTable" xsi:type="string">AHT_Portfolio</argument>
             <argument name="resourceModel" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Portfolio</argument>
+            <argument name="eventPrefix" xsi:type="string">AHT_Portfolio_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">field_grid_collection</argument>
         </arguments>
     </virtualType>
 
