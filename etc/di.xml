@@ -17,15 +17,25 @@
             <argument name="resourceModel" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Category</argument>
         </arguments>
     </virtualType>
-    <!-- Fix for ui_component portfolio_index_listing.xml -->
+    <!-- Fix for ui_component aht_portfolio_listing.xml -->
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="portfolio_index_listing_data_source" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Portfolio\Grid\Collection</item>
+                <item name="aht_portfolio_listing_data_source" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Portfolio\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aht_category_listing_data_source" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Category\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
     <preference for="AHT\Portfolio\Api\PortfolioRepositoryInterface" type="AHT\Portfolio\Model\PortfolioRepository" />
+    <preference for="AHT\Portfolio\Api\CategoryRepositoryInterface" type="AHT\Portfolio\Model\CategoryRepository" />
 
     <!-- Upload IMG -->
     <virtualType name="VirtualTypeName" type="Magento\Catalog\Model\ImageUploader">

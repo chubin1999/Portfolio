@@ -8,7 +8,7 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">portfolio_index_listing.portfolio_index_listing_data_source</item>
+            <item name="provider" xsi:type="string">aht_portfolio_listing.aht_portfolio_listing_data_source</item>
         </item>
     </argument>
     <!-- ADD new button -->
@@ -20,13 +20,13 @@
                 <label translate="true">Add New Portfolio</label>
             </button>
         </buttons>
-        <spinner>portfolio_index_columns</spinner>
+        <spinner>aht_portfolio_columns</spinner>
         <deps>
-            <dep>portfolio_index_listing.portfolio_index_listing_data_source</dep>
+            <dep>aht_portfolio_listing.aht_portfolio_listing_data_source</dep>
         </deps>
     </settings>
     <!-- End add new button-->
-    <dataSource name="portfolio_index_listing_data_source" component="Magento_Ui/js/grid/provider">
+    <dataSource name="aht_portfolio_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
                 <param name="indexField" xsi:type="string">id</param>
@@ -34,7 +34,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>AHT_Portfolio::page</aclResource>
-        <dataProvider class="AHT\Portfolio\Ui\Component\DataProvider" name="portfolio_index_listing_data_source">
+        <dataProvider class="AHT\Portfolio\Ui\Component\DataProvider" name="aht_portfolio_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
@@ -92,7 +92,7 @@
                 <settings>
                     <callback>
                         <target>editSelected</target>
-                        <provider>portfolio_index_listing.portfolio_index_listing.portfolio_index_columns_editor</provider>
+                        <provider>aht_portfolio_listing.aht_portfolio_listing.aht_portfolio_columns_editor</provider>
                     </callback>
                     <type>edit</type>
                     <label translate="true">Edit</label>
@@ -101,20 +101,20 @@
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
-    <columns name="portfolio_index_columns">
+    <columns name="aht_portfolio_columns">
         <settings>
             <editorConfig>
                 <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="cms/page/inlineEdit"/>
+                    <item name="saveUrl" xsi:type="url" path="portfolio/index/inlineEdit"/>
                     <item name="validateBeforeSave" xsi:type="boolean">false</item>
                 </param>
-                <param name="indexField" xsi:type="string">page_id</param>
+                <param name="indexField" xsi:type="string">id</param>
                 <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">portfolio_index_listing.portfolio_index_listing.portfolio_index_columns.ids</param>
+                <param name="selectProvider" xsi:type="string">aht_portfolio_listing.aht_portfolio_listing.aht_portfolio_columns.ids</param>
             </editorConfig>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">portfolio_index_listing.portfolio_index_listing.portfolio_index_columns_editor</item>
+                    <item name="provider" xsi:type="string">aht_portfolio_listing.aht_portfolio_listing.aht_portfolio_columns_editor</item>
                     <item name="target" xsi:type="string">startEdit</item>
                     <item name="params" xsi:type="array">
                         <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
@@ -124,28 +124,22 @@
             </childDefaults>
         </settings>
         <selectionsColumn name="ids">
-           <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
-                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
-                    <item name="indexField" xsi:type="string">id</item>
-                </item>
-            </argument>
+            <settings>
+                <indexField>id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>55</resizeDefaultWidth>
+            </settings>
         </selectionsColumn>
         <column name="id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="number">1</item>
-                    <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">ID</item>
-                </item>
-            </argument>
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
         </column>
-        <column name="title">
+         <column name="title">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="number">2</item>
                     <item name="filter" xsi:type="string">text</item>
                     <item name="editor" xsi:type="array">
                         <item name="editorType" xsi:type="string">text</item>
@@ -171,44 +165,60 @@
         <column name="name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="number">4</item>
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">Category</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Name</item>
                 </item>
             </argument>
-        </column> 
-        <column name="description">
+        </column>
+         <column name="description">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="number">5</item>
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
                     <item name="label" xsi:type="string" translate="true">Description</item>
                 </item>
             </argument>
         </column>
-        <column name="price">
+         <column name="price">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="number">6</item>
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
                     <item name="label" xsi:type="string" translate="true">Price</item>
                 </item>
             </argument>
         </column>
-        <column name="content">
+         <column name="content">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="number">7</item>
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
                     <item name="label" xsi:type="string" translate="true">Content</item>
                 </item>
             </argument>
         </column>
-        <actionsColumn name="actions" class="AHT\Portfolio\Ui\Component\Listing\Column\PortfolioActions">
+         <actionsColumn name="actions" class="AHT\Portfolio\Ui\Component\Listing\Column\PortfolioActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="sortOrder" xsi:type="number">6</item>

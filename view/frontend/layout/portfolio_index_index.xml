@@ -6,7 +6,7 @@
     <body>
     	<referenceContainer name="sidebar.additional" remove="true"/>
         <referenceContainer name="content">
-            <block class="AHT\Portfolio\Block\Frontend\Portfolio\Index" name="portfolio_index_index" template="portfolio/index.phtml" />
+            <block class="AHT\Portfolio\Block\Frontend\Portfolio\Index" name="aht_portfolio_index" template="portfolio/index.phtml" />
         </referenceContainer>
     </body>
 </page>

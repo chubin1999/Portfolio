@@ -1,6 +1,6 @@
 <?php
 
-namespace AHT\Portfolio\Controller\Adminhtml\Index;
+namespace AHT\Portfolio\Controller\Adminhtml\Category;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
@@ -41,7 +41,7 @@ class InlineEdit extends \Magento\Backend\App\Action
             } else {
                 foreach (array_keys($postItems) as $bannerId) {
                     /** @var \PHPCuong\BannerSlider\Model\Banner $model */
-                    $model = $this->_objectManager->create('AHT\Portfolio\Model\Portfolio');
+                    $model = $this->_objectManager->create('AHT\Portfolio\Model\Category');
                     $model->load($bannerId);
                     try {
                         $model->setData(array_merge($model->getData(), $postItems[$bannerId]));

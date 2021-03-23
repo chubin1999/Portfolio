@@ -4,7 +4,7 @@
     <update handle="editor"/>
     <body>
         <referenceContainer name="content">
-            <uiComponent name="aht_portfolio_form"/>
+            <uiComponent name="aht_category_form"/>
         </referenceContainer>
     </body>
 </page>

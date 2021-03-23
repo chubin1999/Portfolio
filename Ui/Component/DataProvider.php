@@ -94,7 +94,7 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
 
         if (!$this->getAuthorizationInstance()->isAllowed('AHT_Portfolio::save')) {
             $metadata = [
-                'portfolio_index_columns' => [
+                'aht_portfolio_columns' => [
                     'arguments' => [
                         'data' => [
                             'config' => [

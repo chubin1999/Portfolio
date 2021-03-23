@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace AHT\Portfolio\Block\Adminhtml\Portfolio\Edit;
+namespace AHT\Portfolio\Block\Adminhtml\Category\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use Magento\Ui\Component\Control\Container;
@@ -27,7 +27,7 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'aht_portfolio_form.aht_portfolio_form',
+                                'targetName' => 'aht_category_form.aht_category_form',
                                 'actionName' => 'save',
                                 'params' => [
                                     true,
@@ -61,7 +61,7 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
                         'buttonAdapter' => [
                             'actions' => [
                                 [
-                                    'targetName' => 'aht_portfolio_form.aht_portfolio_form',
+                                    'targetName' => 'aht_category_form.aht_category_form',
                                     'actionName' => 'save',
                                     'params' => [
                                         true,
@@ -83,7 +83,7 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
                         'buttonAdapter' => [
                             'actions' => [
                                 [
-                                    'targetName' => 'aht_portfolio_form.aht_portfolio_form',
+                                    'targetName' => 'aht_category_form.aht_category_form',
                                     'actionName' => 'save',
                                     'params' => [
                                         true,

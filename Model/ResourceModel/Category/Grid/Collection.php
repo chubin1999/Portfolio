@@ -1,7 +1,7 @@
 <?php
 namespace AHT\Portfolio\Model\ResourceModel\Category\Grid;
 
-use AHT\Portfolio\Model\Category as Category;
+use AHT\Portfolio\Model\Category;
 use Magento\Framework\Api;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface as FetchStrategy;

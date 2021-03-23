@@ -1,7 +1,9 @@
 <?php
 namespace AHT\Portfolio\Model;
 
-class Category extends \Magento\Framework\Model\AbstractModel {
+use AHT\Portfolio\Api\Data\CategoryInterface;
+
+class Category extends \Magento\Framework\Model\AbstractModel implements CategoryInterface{
     public function __construct(
      \Magento\Framework\Model\Context $context,
      \Magento\Framework\Registry $registry,

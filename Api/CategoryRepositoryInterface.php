@@ -3,22 +3,22 @@ namespace AHT\Portfolio\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 
-interface PortfolioRepositoryInterface
+interface CategoryRepositoryInterface
 {
     /**
      * Save Post.
      *
-     * @param \AHT\Portfolio\Model\Portfolio $Post
-     * @return \AHT\Portfolio\Model\Portfolio $Post
+     * @param \AHT\Portfolio\Api\Data\CategoryInterface $Post
+     * @return \AHT\Portfolio\Api\Data\CategoryInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function save(\AHT\Portfolio\Model\Portfolio $Post);
+    public function save(\AHT\Portfolio\Api\Data\CategoryInterface $Post);
 
     /**
      * Retrieve Post.
      *
      * @param int $PostId
-     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
+     * @return \AHT\Portfolio\Api\Data\CategoryInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getById($PostId);
@@ -35,11 +35,11 @@ interface PortfolioRepositoryInterface
     /**
      * Delete Post.
      *
-     * @param \AHT\Portfolio\Api\Data\PortfolioInterface $Post
+     * @param \AHT\Portfolio\Api\Data\CategoryInterface $Post
      * @return bool true on success
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function delete(\AHT\Portfolio\Api\Data\PortfolioInterface $Post);
+    public function delete(\AHT\Portfolio\Api\Data\CategoryInterface $Post);
 
     /**
      * Delete Post by ID.
@@ -50,11 +50,4 @@ interface PortfolioRepositoryInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function deleteById($PostId);
-
-    /**
-     * Get All
-     * 
-     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
-     */
-    public function getList();
 }

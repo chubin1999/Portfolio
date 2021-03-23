@@ -2,19 +2,19 @@
 namespace AHT\Portfolio\Model;
 
 use AHT\Portfolio\Api\Data;
-use AHT\Portfolio\Api\PortfolioRepositoryInterface;
+use AHT\Portfolio\Api\CategoryRepositoryInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use AHT\Portfolio\Model\ResourceModel\Portfolio as ResourcePost;
-use AHT\Portfolio\Model\ResourceModel\Portfolio\CollectionFactory as PostCollectionFactory;
+use AHT\Portfolio\Model\ResourceModel\Category as ResourcePost;
+use AHT\Portfolio\Model\ResourceModel\Category\CollectionFactory as PostCollectionFactory;
 
 /**
  * Class PostRepository
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class PortfolioRepository implements PortfolioRepositoryInterface
+class CategoryRepository implements CategoryRepositoryInterface
 {
     /**
      * @var ResourcePost
@@ -38,7 +38,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface
     /**
      * @param ResourcePost $resource
      * @param PostFactory $PostFactory
-     * @param Data\PortfolioInterfaceFactory $dataPostFactory
+     * @param Data\CategoryInterfaceFactory $dataPostFactory
      * @param PostCollectionFactory $PostCollectionFactory
      * @param Data\PostSearchResultsInterfaceFactory $searchResultsFactory
      */
@@ -46,8 +46,8 @@ class PortfolioRepository implements PortfolioRepositoryInterface
 
     public function __construct(
         ResourcePost $resource,
-        PortfolioFactory $PostFactory,
-        Data\PortfolioInterfaceFactory $dataPostFactory,
+        CategoryFactory $PostFactory,
+        Data\CategoryInterfaceFactory $dataPostFactory,
         PostCollectionFactory $PostCollectionFactory
     ) {
         $this->resource = $resource;
@@ -60,12 +60,13 @@ class PortfolioRepository implements PortfolioRepositoryInterface
     /**
      * Save Post data
      *
-     * @param  \AHT\Portfolio\Model\Portfolio $Post
-     * @return \AHT\Portfolio\Model\Portfolio $Post
+     * @param \AHT\Portfolio\Api\Data\CategoryInterface $Post
+     * @return Post
      * @throws CouldNotSaveException
      */
-    public function save(\AHT\Portfolio\Model\Portfolio $Post)
+    public function save(\AHT\Portfolio\Api\Data\CategoryInterface $Post)
     {
+
         try {
             $this->resource->save($Post);
         } catch (\Exception $exception) {
@@ -74,7 +75,6 @@ class PortfolioRepository implements PortfolioRepositoryInterface
                 $exception
             );
         }
-
         return $Post;
     }
 
@@ -92,8 +92,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface
         if (!$Post->getId()) {
             throw new NoSuchEntityException(__('The CMS Post with the "%1" ID doesn\'t exist.', $PostId));
         }
-        $result = $Post->getData();
-        return $result;
+        return $Post;
     }
 
     /**
@@ -108,18 +107,17 @@ class PortfolioRepository implements PortfolioRepositoryInterface
     {
         /** @var \AHT\Portfolio\Model\ResourceModel\Post\Collection $collection */
         $collection = $this->PostCollectionFactory->create();
-        $collection->addFieldToSelect('*');
         return $collection;
     }
 
     /**
      * Delete Post
      *
-     * @param \AHT\Portfolio\Api\Data\PortfolioInterface $Post
+     * @param \AHT\Portfolio\Api\Data\CategoryInterface $Post
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(\AHT\Portfolio\Api\Data\PortfolioInterface $Post)
+    public function delete(\AHT\Portfolio\Api\Data\CategoryInterface $Post)
     {
         try {
             $this->resource->delete($Post);

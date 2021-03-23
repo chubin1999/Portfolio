@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
-    <widget id="portfolio_index_slider" class="AHT\Portfolio\Block\Frontend\Portfolio\Index" is_email_compatible="false" placeholder_image="Magento_Widget::placeholder.gif">
+    <widget id="aht_portfolio_slider" class="AHT\Portfolio\Block\Frontend\Portfolio\Index" is_email_compatible="false" placeholder_image="Magento_Widget::placeholder.gif">
         <label translate="true">Portfolio index slider</label>
         <description translate="true">AHT Portfolio index slider for widget</description>
         <parameters>
