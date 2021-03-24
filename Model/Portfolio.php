@@ -1,10 +1,16 @@
 <?php
 namespace AHT\Portfolio\Model;
 
+use \Magento\Framework\DataObject\IdentityInterface;
 use AHT\Portfolio\Api\Data\PortfolioInterface;
 
-class Portfolio extends \Magento\Framework\Model\AbstractModel implements PortfolioInterface {
+// class Portfolio extends AbstractModel implements IdentityInterface
+class Portfolio extends \Magento\Framework\Model\AbstractModel implements IdentityInterface, PortfolioInterface {
     const CACHE_TAG = 'aht_portfolio_post';
+
+    protected $_cacheTag = 'aht_portfolio_post';
+
+    protected $_eventPrefix = 'aht_portfolio_post';
     public function __construct(
    	 \Magento\Framework\Model\Context $context,
    	 \Magento\Framework\Registry $registry,
@@ -18,17 +24,18 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Portfo
     }
     public function _construct() {
 		$this->_init('AHT\Portfolio\Model\ResourceModel\Portfolio');
-    }
+    }    
 
-    
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
+
     public function getDefaultValues()
     {
         $values = [];
-    return $values;
+
+        return $values;
     }
 
     public function getId()
@@ -38,8 +45,8 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Portfo
     public function setId($id)
     {
         $this->getData('id', $id);
-    } 
-
+    }
+     
     public function getTitle()
     {
         return $this->getData('title');
@@ -93,5 +100,4 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Portfo
     {
         $this->getData('content', $content);
     } 
-    
 }

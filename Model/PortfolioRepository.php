@@ -9,6 +9,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use AHT\Portfolio\Model\ResourceModel\Portfolio as ResourcePost;
 use AHT\Portfolio\Model\ResourceModel\Portfolio\CollectionFactory as PostCollectionFactory;
+use AHT\Portfolio\Api\Data\PortfolioInterface;
 
 /**
  * Class PostRepository
@@ -60,14 +61,13 @@ class PortfolioRepository implements PortfolioRepositoryInterface
     /**
      * Save Post data
      *
-     * @param  \AHT\Portfolio\Model\Portfolio $Post
-     * @return \AHT\Portfolio\Model\Portfolio $Post
-     * @throws CouldNotSaveException
+     * @param  \AHT\Portfolio\Api\Data\PortfolioInterface $post
+     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
      */
-    public function save(\AHT\Portfolio\Model\Portfolio $Post)
+    public function save(PortfolioInterface $post)
     {
         try {
-            $this->resource->save($Post);
+            $this->resource->save($post);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
                 __('Could not save the Post: %1', $exception->getMessage()),
@@ -75,73 +75,90 @@ class PortfolioRepository implements PortfolioRepositoryInterface
             );
         }
 
-        return $Post;
+        return $post;
     }
 
     /**
      * Load Post data by given Post Identity
      *
-     * @param string $PostId
-     * @return Post
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @param [type] $id
+     * @return \AHT\Portfolio\Model\ResourceModel\Portfolio
      */
-    public function getById($PostId)
+    public function getById($id)
     {
+        $postId = intval($id);
         $Post = $this->PostFactory->create();
-        $Post->load($PostId);
+        $Post->load($postId);
         if (!$Post->getId()) {
             throw new NoSuchEntityException(__('The CMS Post with the "%1" ID doesn\'t exist.', $PostId));
         }
-        $result = $Post->getData();
+        $result = $Post;
         return $result;
     }
 
+
     /**
-     * Load Post data collection by given search criteria
+     * function get all data
      *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $criteria
-     * @return \AHT\Portfolio\Api\Data\PostSearchResultsInterface
+     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
      */
     public function getList()
     {
-        /** @var \AHT\Portfolio\Model\ResourceModel\Post\Collection $collection */
         $collection = $this->PostCollectionFactory->create();
-        $collection->addFieldToSelect('*');
-        return $collection;
+        return $collection->getData();
     }
 
     /**
-     * Delete Post
-     *
-     * @param \AHT\Portfolio\Api\Data\PortfolioInterface $Post
-     * @return bool
-     * @throws CouldNotDeleteException
+     * Create post.
+     *  
+     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
+     * 
+     * @throws LocalizedException
      */
-    public function delete(\AHT\Portfolio\Api\Data\PortfolioInterface $Post)
+    public function createPost(PortfolioInterface $post)
     {
         try {
-            $this->resource->delete($Post);
+            $this->resource->save($post);
         } catch (\Exception $exception) {
-            throw new CouldNotDeleteException(__(
-                'Could not delete the Post: %1',
-                $exception->getMessage()
-            ));
+            throw new CouldNotSaveException(
+                __('Could not save the Post: %1', $exception->getMessage()),
+                $exception
+            );
         }
-        return true;
+        return json_encode(array(
+            "status" => 200,
+            "message" => $post->getData()
+        ));
     }
 
-    /**
-     * Delete Post by given Post Identity
-     *
-     * @param string $PostId
-     * @return bool
-     * @throws CouldNotDeleteException
-     * @throws NoSuchEntityException
-     */
-    public function deleteById($PostId)
+
+    public function updatePost(String $id, PortfolioInterface $post)
     {
-        return $this->delete($this->getById($PostId));
+        try {
+            $objPost = $this->PostFactory->create();
+            $id = intval($postId);
+            $objPost->setId($id);
+            $objPost->setName($post->getName());
+
+            $this->resource->save($objPost);
+
+            return $objPost->getData();
+        } catch (\Exception $exception) {
+            throw new CouldNotSaveException(
+                __('Could not save the Post: %1', $exception->getMessage()),
+                $exception
+            );
+        }
+    }
+
+    public function deleteById($postId)
+    {
+        $id = intval($postId);
+        if($this->resource->delete($this->getPostById($id))) {
+            return json_encode([
+                "status" => 200,
+                "message" => "Successfully"
+            ]);
+        }
     }
 }

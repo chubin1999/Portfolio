@@ -8,7 +8,7 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
     <!-- AHT Portfolio -->
-    <route url="/V1/Portfolio/:PostId" method="GET">
+    <route url="/V1/PortfolioById/:id" method="GET">
         <service class="AHT\Portfolio\Api\PortfolioRepositoryInterface" method="getById"/>
         <resources>
             <resource ref="anonymous"/>
@@ -21,7 +21,7 @@
         </resources>
     </route>
      <route url="/V1/Portfolio" method="POST">
-        <service class="AHT\Portfolio\Api\PortfolioRepositoryInterface" method="save"/>
+        <service class="AHT\Portfolio\Api\PortfolioRepositoryInterface" method="createPost"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>

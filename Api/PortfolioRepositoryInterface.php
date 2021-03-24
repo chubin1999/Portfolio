@@ -8,48 +8,18 @@ interface PortfolioRepositoryInterface
     /**
      * Save Post.
      *
-     * @param \AHT\Portfolio\Model\Portfolio $Post
-     * @return \AHT\Portfolio\Model\Portfolio $Post
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function save(\AHT\Portfolio\Model\Portfolio $Post);
-
-    /**
-     * Retrieve Post.
-     *
-     * @param int $PostId
+     * @param \AHT\Portfolio\Api\Data\PortfolioInterface $post
+     * 
      * @return \AHT\Portfolio\Api\Data\PortfolioInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getById($PostId);
+    public function save(\AHT\Portfolio\Api\Data\PortfolioInterface $post);
 
     /**
-     * Retrieve Posts matching the specified criteria.
+     * Get object by id
      *
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return \AHT\Portfolio\Api\Data\PostSearchResultsInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
      */
-    // public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
-
-    /**
-     * Delete Post.
-     *
-     * @param \AHT\Portfolio\Api\Data\PortfolioInterface $Post
-     * @return bool true on success
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function delete(\AHT\Portfolio\Api\Data\PortfolioInterface $Post);
-
-    /**
-     * Delete Post by ID.
-     *
-     * @param int $PostId
-     * @return bool true on success
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function deleteById($PostId);
+    public function getById(String $id);
 
     /**
      * Get All
@@ -57,4 +27,32 @@ interface PortfolioRepositoryInterface
      * @return \AHT\Portfolio\Api\Data\PortfolioInterface
      */
     public function getList();
+    
+    /**
+     * Create post.
+     *
+     * @param \AHT\Portfolio\Api\Data\PortfolioInterface $post
+     * 
+     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
+     */
+    public function createPost(\AHT\Portfolio\Api\Data\PortfolioInterface $post);
+
+    /**
+     * Update post
+     *
+     * @param String $id
+     * @param \AHT\Blog\Api\Data\PostInterface $post
+     * 
+     * @return null
+     */
+    public function updatePost(String $id, \AHT\Portfolio\Api\Data\PortfolioInterface $post);
+
+    /**
+     * Delete Post by ID.
+     *
+     * @param string $postId
+     * @return \AHT\Portfolio\Api\Data\PortfolioInterface
+     */
+    public function deleteById($postId);
+
 }
