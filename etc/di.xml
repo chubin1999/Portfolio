@@ -37,8 +37,10 @@
     </type>
     <!-- End Configure -->
 
+    <!-- API -->
     <preference for="AHT\Portfolio\Api\PortfolioRepositoryInterface" type="AHT\Portfolio\Model\PortfolioRepository" />
     <preference for="AHT\Portfolio\Api\CategoryRepositoryInterface" type="AHT\Portfolio\Model\CategoryRepository" />
+    <preference for="AHT\Portfolio\Api\Data\PortfolioInterface" type="AHT\Portfolio\Model\Portfolio"/>
 
     <!-- Upload IMG -->
     <virtualType name="VirtualTypeName" type="Magento\Catalog\Model\ImageUploader">

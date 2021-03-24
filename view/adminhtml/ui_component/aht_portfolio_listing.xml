@@ -151,7 +151,7 @@
                 </item>
             </argument>
         </column>
-        <column name="images" class="AHT\Portfolio\Ui\Component\Listing\Column\Image">
+        <column name="image" class="AHT\Portfolio\Ui\Component\Listing\Column\Image">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="sortOrder" xsi:type="number">3</item>

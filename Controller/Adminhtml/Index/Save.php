@@ -74,20 +74,14 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
     {
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
+
         $data = $this->getRequest()->getPostValue();
         if ($data) {
             /*if (isset($data['is_active']) && $data['is_active'] === 'true') {
                 $data['is_active'] = Block::STATUS_ENABLED;
             }*/
-
             if (empty($data['id'])) {
                 $data['id'] = null;
-            }
-            if (isset($data['images'])) {
-                $imageName = $data['images'];
-            }
-            if (isset($data['images'][0]['name'])) {
-                $imageName = $data['images'][0]['name'];
             }
             /** @var \Magento\Cms\Model\Block $model */
             $model = $this->blockFactory->create();
@@ -101,11 +95,17 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
                     return $resultRedirect->setPath('*/*/');
                 }
             }
-            
-            //Get name of images in database
-            $data['images'] = $imageName;
-            $model->setData($data);
+            $data2 = $data;
+            if (isset($data2['image'])) {
+                $data2['image'] = $data['image'][0]['name'];
+                $imageName = $data2['image'];
+            }else{
+                $data2['image'] = "";
+            }
+            $model->setData($data2);
 
+            
+            
             try {
                 $this->blockRepository->save($model);
                 /*$model->save();*/

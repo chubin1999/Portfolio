@@ -51,8 +51,8 @@ class Image extends \Magento\Ui\Component\Listing\Columns\Column
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
                 $portfolio = new \Magento\Framework\DataObject($item);
-                $item[$fieldName . '_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/index/".$portfolio['images'];
-                $item[$fieldName . '_orig_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/index/".$portfolio['images'];
+                $item[$fieldName . '_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/index/".$portfolio['image'];
+                $item[$fieldName . '_orig_src'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)."portfolio/index/".$portfolio['image'];
                 $item[$fieldName . '_link'] = $this->urlBuilder->getUrl("portfolio/index/edit",
                     ['id' => $portfolio['id']]
                 );

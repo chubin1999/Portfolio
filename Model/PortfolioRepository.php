@@ -129,17 +129,19 @@ class PortfolioRepository implements PortfolioRepositoryInterface
             "status" => 200,
             "message" => $post->getData()
         ));
+        
     }
 
 
     public function updatePost(String $id, PortfolioInterface $post)
     {
+
         try {
             $objPost = $this->PostFactory->create();
-            $id = intval($postId);
+            $id = intval($id);
             $objPost->setId($id);
-            $objPost->setName($post->getName());
-
+            //Set full collum
+            $objPost->setData($post->getData());
             $this->resource->save($objPost);
 
             return $objPost->getData();
@@ -154,7 +156,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface
     public function deleteById($postId)
     {
         $id = intval($postId);
-        if($this->resource->delete($this->getPostById($id))) {
+        if($this->resource->delete($this->getById($id))) {
             return json_encode([
                 "status" => 200,
                 "message" => "Successfully"

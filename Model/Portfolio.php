@@ -11,6 +11,7 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     protected $_cacheTag = 'aht_portfolio_post';
 
     protected $_eventPrefix = 'aht_portfolio_post';
+    
     public function __construct(
    	 \Magento\Framework\Model\Context $context,
    	 \Magento\Framework\Registry $registry,
@@ -44,7 +45,7 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     }
     public function setId($id)
     {
-        $this->getData('id', $id);
+        $this->setData('id', $id);
     }
      
     public function getTitle()
@@ -53,7 +54,7 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     }
     public function setTitle($title)
     {
-        $this->getData('title', $title);
+        $this->setData('title', $title);
     } 
 
     public function getImages()
@@ -62,7 +63,7 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     }
     public function setImages($images)
     {
-        $this->getData('images', $images);
+        $this->setData('images', $images);
     } 
 
     public function getCategoryid()
@@ -71,7 +72,7 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     }
     public function setCategoryid($categoryid)
     {
-        $this->getData('categoryid', $categoryid);
+        $this->setData('categoryid', $categoryid);
     }
 
     public function getDescription()
@@ -80,7 +81,7 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     }
     public function setDescription($description)
     {
-        $this->getData('description', $description);
+        $this->setData('description', $description);
     } 
 
     public function getPrice()
@@ -98,6 +99,6 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     }
     public function setContent($content)
     {
-        $this->getData('content', $content);
+        $this->setData('content', $content);
     } 
 }

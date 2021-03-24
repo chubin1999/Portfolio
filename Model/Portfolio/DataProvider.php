@@ -8,6 +8,9 @@ namespace AHT\Portfolio\Model\Portfolio;
 use AHT\Portfolio\Model\ResourceModel\Portfolio\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
+use Magento\Framework\App\ObjectManager;
+use AHT\Portfolio\Model\Portfolio\FileInfo;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class DataProvider
@@ -28,7 +31,8 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
      * @var array
      */
     protected $loadedData;
-
+    private $fileInfo;
+    protected $_storeManager;   
     /**
      * Constructor
      *
@@ -47,13 +51,32 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         $requestFieldName,
         CollectionFactory $blockCollectionFactory,
         DataPersistorInterface $dataPersistor,
+        StoreManagerInterface $storeManager,
         array $meta = [],
         array $data = [],
         PoolInterface $pool = null
     ) {
         $this->collection = $blockCollectionFactory->create();
         $this->dataPersistor = $dataPersistor;
+        $this->_storeManager = $storeManager;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data, $pool);
+    }
+
+    public function convertValues($banner)
+    {
+        $fileName = $banner->getImage();
+        $image = [];
+        if ($this->getFileInfo()->isExist($fileName)) {
+            $stat = $this->getFileInfo()->getStat($fileName);
+            $mime = $this->getFileInfo()->getMimeType($fileName);
+            $image[0]['name'] = $fileName;
+            $image[0]['url'] = $this->_storeManager->getStore()->getBaseUrl()."pub/media/portfolio/index/".$fileName;
+            $image[0]['size'] = isset($stat) ? $stat['size'] : 0;
+            $image[0]['type'] = $mime;
+        }
+        $banner->setImage($image);
+
+        return $banner;
     }
 
     /**
@@ -62,24 +85,17 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
      * @return array
      */
     public function getData()
-    {
+    {  
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
         $items = $this->collection->getItems();
+
         /** @var \Magento\Cms\Model\Block $block */
-        foreach ($items as $item) {
-            /*$this->loadedData[$block->getId()] = $block->getData();*/
-            $_data = $item->getData();
-            $item->load($item->getId());
-            if (isset($_data['image'])) {
-                $image = [];
-                $image[0]['name'] = $item->getImagePath();
-                $image[0]['url'] = $this->imageModel->getMediaUrl().'item/image'.$item->getImagePath();
-                $_data['image'] = $image;
-            }
-            $item->setData($_data);
-            $this->loadedData[$item->getId()] = $_data;
+       foreach ($items as $banner) {
+            $banner = $this->convertValues($banner);
+
+            $this->loadedData[$banner->getId()] = $banner->getData();
         }
 
         $data = $this->dataPersistor->get('index');
@@ -91,5 +107,12 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         }
 
         return $this->loadedData;
+    }
+    private function getFileInfo()
+    {
+        if ($this->fileInfo === null) {
+            $this->fileInfo = ObjectManager::getInstance()->get(FileInfo::class);
+        }
+        return $this->fileInfo;
     }
 }
