@@ -64,7 +64,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
 
     public function convertValues($banner)
     {
-        $fileName = $banner->getImage();
+        $fileName = $banner->getImages();
         $image = [];
         if ($this->getFileInfo()->isExist($fileName)) {
             $stat = $this->getFileInfo()->getStat($fileName);

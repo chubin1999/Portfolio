@@ -95,14 +95,13 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
                     return $resultRedirect->setPath('*/*/');
                 }
             }
-            $data2 = $data;
-            if (isset($data2['image'])) {
-                $data2['image'] = $data['image'][0]['name'];
-                $imageName = $data2['image'];
+            if (isset($data['image'][0]['name'])) {
+                $data['images'] = $data['image'][0]['name'];
+                $imageName = $data['images'];
             }else{
-                $data2['image'] = "";
+                $imageName = '';
             }
-            $model->setData($data2);
+            $model->setData($data);
 
             
             
