@@ -110,7 +110,7 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
                 /*$model->save();*/
                 $this->messageManager->addSuccessMessage(__('You saved the block.'));
                 $this->dataPersistor->clear('fortfolio');
-                if ($imageName) {
+                if ($imageName){
                     $this->imageUploader->moveFileFromTmp($imageName);
                 }
                 return $this->processBlockReturn($model, $data, $resultRedirect);
