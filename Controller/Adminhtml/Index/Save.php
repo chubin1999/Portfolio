@@ -13,6 +13,8 @@ use Magento\Framework\Registry;
 use AHT\Portfolio\Api\PortfolioRepositoryInterface;
 use AHT\Portfolio\Model\Portfolio;
 use AHT\Portfolio\Model\PortfolioFactory;
+use AHT\Portfolio\Model\Images;
+use AHT\Portfolio\Model\ImagesFactory;
 use AHT\Portfolio\Model\Portfolio\ImageUploader;
 
 /**
@@ -35,6 +37,11 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
      */
     private $blockRepository;
 
+     /**
+     * @var ImageFactory
+     */
+     private $imagesFactory;
+
     /**
      * @var ImageUploader
      */
@@ -52,14 +59,17 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
         Registry $coreRegistry,
         DataPersistorInterface $dataPersistor,
         PortfolioFactory $blockFactory = null,
+        ImagesFactory $imagesFactory = null,
         ImageUploader $imageUploader,
         PortfolioRepositoryInterface $blockRepository = null
     ) {
         $this->dataPersistor = $dataPersistor;
         $this->blockFactory = $blockFactory
-            ?: \Magento\Framework\App\ObjectManager::getInstance()->get(PortfolioFactory::class);
+        ?: \Magento\Framework\App\ObjectManager::getInstance()->get(PortfolioFactory::class);
+        $this->imagesFactory = $imagesFactory
+        ?: \Magento\Framework\App\ObjectManager::getInstance()->get(ImagesFactory::class);
         $this->blockRepository = $blockRepository
-            ?: \Magento\Framework\App\ObjectManager::getInstance()->get(PortfolioRepositoryInterface::class);
+        ?: \Magento\Framework\App\ObjectManager::getInstance()->get(PortfolioRepositoryInterface::class);
         $this->imageUploader = $imageUploader;
         parent::__construct($context, $coreRegistry);  
     }
@@ -85,6 +95,7 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
             }
             /** @var \Magento\Cms\Model\Block $model */
             $model = $this->blockFactory->create();
+            $image = $this->imagesFactory->create();
 
             $id = $this->getRequest()->getParam('id');
             if ($id) {
@@ -95,24 +106,35 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
                     return $resultRedirect->setPath('*/*/');
                 }
             }
-            $data2 = $data;
-            if (isset($data2['image'][0]['name'])) {
-                $data2['images'] = $data['image'][0]['name'];
-                $imageName = $data2['images'];
-            }else{
-                $imageName = '';
-            }
-            $data['images'] = $imageName;
-            $model->setData($data);      
-            
+
+            $model->setData($data);
+
             try {
+                /*Đầu tiên lưu đối tượng vào bảng AHT_Portfilio*/
                 $this->blockRepository->save($model);
-                /*$model->save();*/
+
+                /*Đây là lấy id của Porftolio khởi tạo ở trên*/
+                $portfolioId = $model->getId();
+
+                /*Dùng foreach để duyệt mảng để lưu ảnh của Portfolio vào bảng AHT_Images*/
+                foreach ($model['image'] as $key => $value) {
+                   /* Mỗi lần for sẽ khởi tạo 1 đối tượng Image mới */
+                   $image = $this->imagesFactory->create();
+
+                   /* Set dữ liệu cho đối tượng image*/
+                   $image->setPath($value['name']);
+                   $image->setPortfolioId($portfolioId);
+
+                   /*Lưu đối tượng vào bảng AHT_Images*/
+                   $image->save();
+
+                   /*Move ảnh vào pub*/
+                   $this->imageUploader->moveFileFromTmp($value['name']);
+               }
+
                 $this->messageManager->addSuccessMessage(__('You saved the block.'));
                 $this->dataPersistor->clear('fortfolio');
-                if ($imageName){
-                    $this->imageUploader->moveFileFromTmp($imageName);
-                }
+                
                 return $this->processBlockReturn($model, $data, $resultRedirect);
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());

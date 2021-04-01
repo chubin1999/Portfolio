@@ -56,12 +56,22 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
     {
         $this->getSelect()
             ->from(['main_table' => 'AHT_Portfolio'])
+            ->joinInner('AHT_Images',
+            'main_table.id = AHT_Images.PortfolioId',
+            [
+                'AHT_Images.path',
+                 'AHT_Images.image_id',
+                         'AHT_Images.PortfolioId',
+            ])
             ->joinLeft('AHT_Categories',
             'main_table.categoryid = AHT_Categories.id',
             [
                 'AHT_Categories.name'
             ]);
-        $this->addFilterToMap('id', 'main_table.id');
+      //  $this->addFilterToMap('id', 'AHT_Images.id');
+        /*echo "<pre>";
+        var_dump($this->getData());
+        die('aaa');*/
         return $this;
     }
 }

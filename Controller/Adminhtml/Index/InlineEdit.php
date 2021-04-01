@@ -40,7 +40,6 @@ class InlineEdit extends \Magento\Backend\App\Action
                 $error = true;
             } else {
                 foreach (array_keys($postItems) as $bannerId) {
-                    /** @var \PHPCuong\BannerSlider\Model\Banner $model */
                     $model = $this->_objectManager->create('AHT\Portfolio\Model\Portfolio');
                     $model->load($bannerId);
                     try {

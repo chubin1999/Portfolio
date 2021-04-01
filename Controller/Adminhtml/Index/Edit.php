@@ -17,6 +17,8 @@ class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
      */
     protected $resultPageFactory;
     protected $_postFactory;
+    protected $_imagesFactory;
+    protected $_portfolioResourceFactory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -27,11 +29,15 @@ class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \AHT\Portfolio\Model\PortfolioFactory $postFactory
+        \AHT\Portfolio\Model\PortfolioFactory $postFactory,
+        \AHT\Portfolio\Model\ImagesFactory $imagesFactory,
+        \AHT\Portfolio\Model\ResourceModel\PortfolioFactory $portfolioResourceFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
         parent::__construct($context, $coreRegistry);
         $this->_postFactory = $postFactory;
+        $this->_imagesFactory = $imagesFactory;
+        $this->_portfolioResourceFactory = $portfolioResourceFactory;
     }
 
     /**
@@ -42,13 +48,23 @@ class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
      */
     public function execute()
     {
+
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('id');
         $model = $this->_postFactory->create();
+        $modelresource = $this->_portfolioResourceFactory->create();
+        $image = $this->_imagesFactory->create();
 
         // 2. Initial checking
         if ($id) {
-            $model->load($id);
+            $modelresource->load($model, $id);
+            /*echo "<pre>";
+            var_dump($model->getData());
+            die();*/
+            /*$image->load($model['id']);*/
+            /*echo "<pre>";
+            var_dump($image->getData());*/
+            /*die();*/
             if (!$model->getId()) {
                 $this->messageManager->addErrorMessage(__('This block no longer exists.'));
                 /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
@@ -68,7 +84,6 @@ class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
             $id ? __('Edit Block') : __('New Block'),
             $id ? __('Edit Block') : __('New Block')
         );
-        
         $resultPage->getConfig()->getTitle()->prepend(__('All Portfolio'));
         $resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('New Portfolio'));
         return $resultPage;

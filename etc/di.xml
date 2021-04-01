@@ -56,5 +56,10 @@
             </argument>
         </arguments>
     </virtualType>
-
+    <!-- <type name="AHT\Portfolio\Controller\Adminhtml\Index\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">VirtualTypeName</argument>
+        </arguments>
+    </type> -->
+    
 </config>

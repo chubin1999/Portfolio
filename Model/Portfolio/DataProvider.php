@@ -92,10 +92,18 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         $items = $this->collection->getItems();
 
         /** @var \Magento\Cms\Model\Block $block */
-       foreach ($items as $banner) {
-            $banner = $this->convertValues($banner);
-
-            $this->loadedData[$banner->getId()] = $banner->getData();
+        foreach ($items as $banner) {
+            if($dem > 1) break;
+            if ($banner->getDefaultImage()) {
+                $img['path'][0]['name'] = $banner->getDefaultImage();
+                $img['path'][0]['url'] = $this->getMediaUrl()."/".$banner->getDefaultImage();
+                $fullData = $banner->getData();
+                $this->_loadedData[$banner->getId()] = array_merge($fullData, $img);
+            }
+            else{
+                $banner = $this->convertValues($banner);
+                $this->loadedData[$banner->getId()] = $banner->getData();
+            }
         }
 
         $data = $this->dataPersistor->get('index');
