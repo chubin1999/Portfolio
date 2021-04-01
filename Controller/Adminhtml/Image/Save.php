@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace AHT\Portfolio\Controller\Adminhtml\Index;
+namespace AHT\Portfolio\Controller\Adminhtml\Image;
 
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Backend\App\Action\Context;
@@ -18,7 +18,7 @@ use AHT\Portfolio\Model\Portfolio\ImageUploader;
 /**
  * Save CMS block action.
  */
-class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements HttpPostActionInterface
+class Save extends \AHT\Portfolio\Controller\Adminhtml\Image implements HttpPostActionInterface
 {
     /**
      * @var DataPersistorInterface
@@ -104,7 +104,7 @@ class Save extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
             }
             $data['images'] = $imageName;
             $model->setData($data);      
-            
+
             try {
                 $this->blockRepository->save($model);
                 /*$model->save();*/

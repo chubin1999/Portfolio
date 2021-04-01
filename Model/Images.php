@@ -5,7 +5,7 @@ use \Magento\Framework\DataObject\IdentityInterface;
 
 // class Portfolio extends AbstractModel implements IdentityInterface
 class Images extends \Magento\Framework\Model\AbstractModel {
-    
+
     public function __construct(
    	 \Magento\Framework\Model\Context $context,
    	 \Magento\Framework\Registry $registry,
@@ -50,7 +50,7 @@ class Images extends \Magento\Framework\Model\AbstractModel {
     {
         $this->setData('PortfolioId', $id);
     }
-     
+
     public function getPath()
     {
         return $this->getData('path');
@@ -59,4 +59,4 @@ class Images extends \Magento\Framework\Model\AbstractModel {
     {
         $this->setData('path', $path);
     } 
-}
+} 

@@ -19,6 +19,13 @@
             <argument name="resourceModel" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Category</argument>
         </arguments>
     </virtualType>
+
+    <virtualType name="AHT\Portfolio\Model\ResourceModel\Images\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">AHT_Images</argument>
+            <argument name="resourceModel" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Images</argument>
+        </arguments>
+    </virtualType>
     <!-- register our data source: Dang ky nguon du lieu -->
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
@@ -32,6 +39,14 @@
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="aht_category_listing_data_source" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Category\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aht_image_listing_data_source" xsi:type="string">AHT\Portfolio\Model\ResourceModel\Images\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
@@ -56,10 +71,5 @@
             </argument>
         </arguments>
     </virtualType>
-    <!-- <type name="AHT\Portfolio\Controller\Adminhtml\Index\Upload">
-        <arguments>
-            <argument name="imageUploader" xsi:type="object">VirtualTypeName</argument>
-        </arguments>
-    </type> -->
     
 </config>

@@ -12,5 +12,4 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
 	{
 		$this->_init('AHT\Portfolio\Model\Images', 'AHT\Portfolio\Model\ResourceModel\Images');
 	}
-
-}
+} 

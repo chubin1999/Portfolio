@@ -33,19 +33,14 @@ class Index extends Template implements BlockInterface
     {
 
         $portfolio = $this->_collection;
-        $portfolio->distinct(true);
-
         $items = $portfolio->getItems();
-         //die("sdgfhj");
-        /*echo "<pre>";*/
         foreach($items as $item)
         { 
-
             $itemData = $item->getData();
-
             $this->_loadedData[$item->getId()] = $itemData;
         }
-       return $this->_loadedData;
+
+        return $this->_loadedData;
     }
 
     public function getStoreManager(){

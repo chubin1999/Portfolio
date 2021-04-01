@@ -1,7 +1,7 @@
 <?php
-namespace AHT\Portfolio\Model\ResourceModel\Portfolio\Grid;
+namespace AHT\Portfolio\Model\ResourceModel\Images\Grid;
 
-use AHT\Portfolio\Model\Portfolio;
+use AHT\Portfolio\Model\Images;
 use Magento\Framework\Api;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface as FetchStrategy;
@@ -26,6 +26,8 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
      * @var Visitor
      */
     protected $visitorModel;
+    protected $_request;
+    protected $resultPageFactory;
 
     /**
      * @param EntityFactory $entityFactory
@@ -44,24 +46,33 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         EventManager $eventManager,
         $mainTable,
         $resourceModel,
-        Portfolio $portfolioModel,
-        \Magento\Framework\Stdlib\DateTime\DateTime $date
+        Images $imagesModel,
+        \Magento\Framework\Stdlib\DateTime\DateTime $date,
+        \Magento\Framework\App\Request\Http $request,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
         $this->date = $date;
-        $this->portfolioModel = $portfolioModel;
-        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $mainTable, $resourceModel);
+        $this->imagesModel = $imagesModel;
+        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $mainTable, $resourceModel, $request);
+        $this->_request = $request;
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     protected function _initSelect()
     {
+        $id = $this->_request->getParam('id');
+        /*var_dump($this->getRequest());
+        die();*/
+
         $this->getSelect()
-            ->from(['main_table' => 'AHT_Portfolio'])
-            ->joinLeft('AHT_Categories',
-            'main_table.categoryid = AHT_Categories.id',
+            ->from('AHT_Images')
+            ->where('portfolio_id' . '=?', $id)
+            ->joinLeft('AHT_Portfolio',
+            'AHT_Images.portfolio_id = AHT_Portfolio.id',
             [
-                'AHT_Categories.name'
+                'AHT_Portfolio.*'
             ]);
-        $this->addFilterToMap('id', 'main_table.id');
+        $this->addFilterToMap('image_id', 'AHT_Images.image_id');
         return $this;
     }
 }

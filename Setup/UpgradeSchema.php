@@ -20,7 +20,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
      */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {   
-        $setup->startSetup();
         if (version_compare($context->getVersion(), '1.0.1', '<')) {
             $setup->getConnection()->addColumn(
                 $setup->getTable('AHT_Portfolio'),
@@ -76,14 +75,14 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'nullable' => false, 
                     'primary' => true
                 ],
-                'Id'
+                'Image_id'
             )
             ->addColumn(
-                'PortfolioId',
+                'portfolio_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 255,
                 [
-                    'nullable' => false
+                    'nullable' => true
                 ],
                     'PortfolioId'
             )
@@ -93,11 +92,20 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 255,
                 [
                     'length' => 255,
-                    'nullable' => false,
+                    'nullable' => true,
                     'default' => '',
                     'comment' => 'Path_image_ 1'
                 ],
                     'path'
+            )
+            ->addColumn(
+                'status',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                255,
+                [
+                    'nullable' => true
+                ],
+                    'Status'
             )
             ->setComment('AHT IMG')
             ->setOption('type', 'InnoDB')
@@ -105,8 +113,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 $setup->getConnection()->createTable($tableImg);
             }
         }
-
-        
         $setup->endSetup();
     }
 

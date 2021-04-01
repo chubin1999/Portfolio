@@ -10,7 +10,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 /**
  * Edit CMS block action.
  */
-class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements HttpGetActionInterface
+class Edit extends \AHT\Portfolio\Controller\Adminhtml\Image implements HttpGetActionInterface
 {
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -27,7 +27,7 @@ class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \AHT\Portfolio\Model\PortfolioFactory $postFactory
+        \AHT\Portfolio\Model\ImageFactory $postFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
         parent::__construct($context, $coreRegistry);
@@ -68,7 +68,7 @@ class Edit extends \AHT\Portfolio\Controller\Adminhtml\Portfolio implements Http
             $id ? __('Edit Block') : __('New Block'),
             $id ? __('Edit Block') : __('New Block')
         );
-        
+
         $resultPage->getConfig()->getTitle()->prepend(__('All Portfolio'));
         $resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('New Portfolio'));
         return $resultPage;

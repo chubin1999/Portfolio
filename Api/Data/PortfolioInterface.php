@@ -91,7 +91,7 @@ interface PortfolioInterface
     /**
      * Set portfolio price
      *
-     * @param string $title
+     * @param string $price
      * @return null
      */
     public function setPrice($price);

@@ -8,7 +8,7 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">aht_portfolio_listing.aht_portfolio_listing_data_source</item>
+            <item name="provider" xsi:type="string">aht_image_listing.aht_image_listing_data_source</item>
         </item>
     </argument>
     <!-- ADD new button -->
@@ -17,27 +17,27 @@
             <button name="add">
                 <url path="*/*/new"/>
                 <class>primary</class>
-                <label translate="true">Add New Portfolio</label>
+                <label translate="true">Add New Image</label>
             </button>
         </buttons>
-        <spinner>aht_portfolio_columns</spinner>
+        <spinner>aht_image_columns</spinner>
         <deps>
-            <dep>aht_portfolio_listing.aht_portfolio_listing_data_source</dep>
+            <dep>aht_image_listing.aht_image_listing_data_source</dep>
         </deps>
     </settings>
     <!-- End add new button-->
-    <dataSource name="aht_portfolio_listing_data_source" component="Magento_Ui/js/grid/provider">
+    <dataSource name="aht_image_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
                 <param name="indexField" xsi:type="string">id</param>
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <aclResource>AHT_Portfolio::page</aclResource>
-        <dataProvider class="AHT\Portfolio\Ui\Component\DataProvider" name="aht_portfolio_listing_data_source">
+        <aclResource>AHT_Images::index</aclResource>
+        <dataProvider class="Magento\Cms\Ui\Component\DataProvider" name="aht_image_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
-                <primaryFieldName>id</primaryFieldName>
+                <primaryFieldName>image_id</primaryFieldName>
             </settings>
         </dataProvider>
     </dataSource>
@@ -83,38 +83,40 @@
                         <message translate="true">Are you sure you want to delete selected items?</message>
                         <title translate="true">Delete items</title>
                     </confirm>
-                    <url path="portfolio/index/massDelete"/>
+                    <url path="portfolio/image/massDelete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
                 </settings>
             </action>
-            <action name="edit">
+            <!-- <action name="edit">
                 <settings>
                     <callback>
                         <target>editSelected</target>
-                        <provider>aht_portfolio_listing.aht_portfolio_listing.aht_portfolio_columns_editor</provider>
+                        <provider>aht_image_listing.aht_image_listing.aht_image_columns_editor</provider>
                     </callback>
                     <type>edit</type>
                     <label translate="true">Edit</label>
                 </settings>
-            </action>
+            </action> -->
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
-    <columns name="aht_portfolio_columns">
+    <columns name="aht_image_columns">
         <settings>
             <editorConfig>
                 <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="portfolio/index/inlineEdit"/>
+                    <item name="saveUrl" xsi:type="url" path="portfolio/image/inlineEdit"/>
                     <item name="validateBeforeSave" xsi:type="boolean">false</item>
                 </param>
                 <param name="indexField" xsi:type="string">id</param>
                 <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">aht_portfolio_listing.aht_portfolio_listing.aht_portfolio_columns.ids</param>
+                <param name="selectProvider" xsi:type="string">
+                    aht_image_listing.aht_image_listing.aht_image_columns.ids</param>
             </editorConfig>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">aht_portfolio_listing.aht_portfolio_listing.aht_portfolio_columns_editor</item>
+                    <item name="provider" xsi:type="string">
+                        aht_image_listing.aht_image_listing.aht_image_columns_editor</item>
                     <item name="target" xsi:type="string">startEdit</item>
                     <item name="params" xsi:type="array">
                         <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
@@ -130,14 +132,14 @@
                 <resizeDefaultWidth>55</resizeDefaultWidth>
             </settings>
         </selectionsColumn>
-        <column name="id">
+        <column name="image_id">
             <settings>
                 <filter>textRange</filter>
-                <label translate="true">ID</label>
+                <label translate="true">ImageID</label>
                 <sorting>asc</sorting>
             </settings>
         </column>
-         <column name="title">
+         <column name="portfolio_id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
@@ -147,78 +149,36 @@
                             <item name="required-entry" xsi:type="boolean">true</item>
                         </item>
                     </item>
-                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="label" xsi:type="string" translate="true">PortfolioID</item>
                 </item>
             </argument>
         </column>
-        <column name="images" class="AHT\Portfolio\Ui\Component\Listing\Column\Image">
+         <column name="path">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Path</item>
+                </item>
+            </argument>
+        </column>
+        <!-- <column name="path" class="AHT\Portfolio\Ui\Component\Image\Column\Image">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="sortOrder" xsi:type="number">3</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/thumbnail</item>
                     <item name="sortable" xsi:type="boolean">false</item>
                     <item name="has_preview" xsi:type="string">1</item>
-                    <item name="label" xsi:type="string" translate="true">Images</item>
+                    <item name="label" xsi:type="string" translate="true">ImagePath</item>
                 </item>
             </argument>
-        </column>
-        <column name="name">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                   <!--  <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item> -->
-                    <item name="label" xsi:type="string" translate="true">Name</item>
-                </item>
-            </argument>
-        </column>
-         <column name="description">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Description</item>
-                </item>
-            </argument>
-        </column>
-         <column name="price">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Price</item>
-                </item>
-            </argument>
-        </column>
-         <column name="content">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Content</item>
-                </item>
-            </argument>
-        </column>
-         <actionsColumn name="actions" class="AHT\Portfolio\Ui\Component\Listing\Column\PortfolioActions">
+        </column> -->
+         <actionsColumn name="actions" class="AHT\Portfolio\Ui\Component\Image\Column\ImageActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="sortOrder" xsi:type="number">6</item>

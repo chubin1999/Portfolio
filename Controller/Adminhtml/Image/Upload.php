@@ -1,6 +1,6 @@
 <?php
 
-namespace AHT\Portfolio\Controller\Adminhtml\Index;
+namespace AHT\Portfolio\Controller\Adminhtml\Image;
 
 use Magento\Framework\Controller\ResultFactory;
 
@@ -59,4 +59,4 @@ class Upload extends \Magento\Backend\App\Action
         }
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
-}
+} 

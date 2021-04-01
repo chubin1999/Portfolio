@@ -34,8 +34,8 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">AHT\Portfolio\Model\Portfolio\DataProvider</argument>
             <argument name="name" xsi:type="string">aht_portfolio_form_data_source</argument>
-             <!-- Khóa chính của bảng (chú ý dòng này là sử dụng khóa chính của model image)-->
-            <argument name="primaryFieldName" xsi:type="string">image_id</argument>
+             <!-- Khóa chính của bảng -->
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -76,7 +76,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">index</item>
-                    <item name="isMultipleFiles" xsi:type="boolean">true</item>
                      <!-- <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item> -->
@@ -105,7 +104,6 @@
                 </imageUploader>
             </formElements>
         </field>
-
         <field name="categoryid" sortOrder="3" formElement="select">
             <settings>
                 <dataType>text</dataType>

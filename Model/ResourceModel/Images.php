@@ -6,4 +6,4 @@ class Images extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb {
     {
         $this->_init('AHT_Images', 'image_id');
     }
-}
+} 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AHT\Portfolio\Controller\Adminhtml\Index;
+namespace AHT\Portfolio\Controller\Adminhtml\Image;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;

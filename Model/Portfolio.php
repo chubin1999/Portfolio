@@ -101,14 +101,4 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     {
         $this->setData('content', $content);
     } 
-
-    public function getImage()
-    {
-        return $this->getData('path');
-    }
-    
-    public function setImage($path)
-    {
-        $this->setData('path', $path);
-    } 
 }

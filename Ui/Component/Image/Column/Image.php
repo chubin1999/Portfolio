@@ -1,6 +1,6 @@
 <?php
 
-namespace AHT\Portfolio\Ui\Component\Listing\Column;
+namespace AHT\Portfolio\Ui\Component\Image\Column;
 
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -62,4 +62,4 @@ class Image extends \Magento\Ui\Component\Listing\Columns\Column
 
         return $dataSource;
     }
-}
+} 
