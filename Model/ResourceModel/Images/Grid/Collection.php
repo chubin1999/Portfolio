@@ -15,7 +15,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
    /**
      * Value of seconds in one minute
      */
-    const SECONDS_IN_MINUTE = 60;
+   const SECONDS_IN_MINUTE = 60;
 
     /**
      * @var \Magento\Framework\Stdlib\DateTime\DateTime
@@ -28,6 +28,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
     protected $visitorModel;
     protected $_request;
     protected $resultPageFactory;
+    protected $_registry;
 
     /**
      * @param EntityFactory $entityFactory
@@ -49,9 +50,11 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         Images $imagesModel,
         \Magento\Framework\Stdlib\DateTime\DateTime $date,
         \Magento\Framework\App\Request\Http $request,
+        \Magento\Framework\Registry $registry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
         $this->date = $date;
+        $this->_registry = $registry;
         $this->imagesModel = $imagesModel;
         parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $mainTable, $resourceModel, $request);
         $this->_request = $request;
@@ -60,18 +63,18 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
     protected function _initSelect()
     {
-        $id = $this->_request->getParam('id');
-        /*var_dump($this->getRequest());
-        die();*/
+        $idimg = (int)$this->_registry->registry('id_var'); 
 
         $this->getSelect()
-            ->from('AHT_Images')
-            ->where('portfolio_id' . '=?', $id)
-            ->joinLeft('AHT_Portfolio',
+        ->from('AHT_Images')
+        ->where('portfolio_id' .' = '. $idimg)
+        ->join('AHT_Portfolio',
             'AHT_Images.portfolio_id = AHT_Portfolio.id',
             [
                 'AHT_Portfolio.*'
             ]);
+
+
         $this->addFilterToMap('image_id', 'AHT_Images.image_id');
         return $this;
     }
