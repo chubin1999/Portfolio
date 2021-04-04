@@ -71,4 +71,17 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <!-- Plugin -->
+     <type name="Magento\Catalog\Model\Product">
+        <plugin name="cache_price1" type="AHT\Portfolio\Plugin\Product2" sortOrder="10" />
+    </type>
+
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="cache_price2" type="AHT\Portfolio\Plugin\Product1" sortOrder="20" />
+    </type>
+
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="cache_price3" type="AHT\Portfolio\Plugin\Product3" sortOrder="30" />
+    </type>
 </config>

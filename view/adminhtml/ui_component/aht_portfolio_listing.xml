@@ -33,7 +33,7 @@
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <aclResource>AHT_Portfolio::page</aclResource>
+        <aclResource>AHT_Portfolio::index</aclResource>
         <dataProvider class="AHT\Portfolio\Ui\Component\DataProvider" name="aht_portfolio_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
