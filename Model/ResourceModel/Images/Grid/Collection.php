@@ -29,6 +29,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
     protected $_request;
     protected $resultPageFactory;
     protected $_registry;
+    private $id;
 
     /**
      * @param EntityFactory $entityFactory
@@ -61,21 +62,36 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         $this->resultPageFactory = $resultPageFactory;
     }
 
+
+    public function setPortfolioId($id){
+        $this->id = $id;
+    }
+
+    public function getPortfolioId(){
+        return $this->id;
+    }
+
+    public function createSelect($id){
+        $this->_initSelect();
+        //Them id trong conntroler vao init select
+    }
+
     protected function _initSelect()
     {
-        $idimg = (int)$this->_registry->registry('id_var'); 
-
+        echo $this->id;
+        die('model');
+        $imdId = $this->id;
         $this->getSelect()
         ->from('AHT_Images')
-        ->where('portfolio_id' .' = '. $idimg)
+        ->where("AHT_Images.portfolio_id = $imdId")
         ->join('AHT_Portfolio',
             'AHT_Images.portfolio_id = AHT_Portfolio.id',
             [
                 'AHT_Portfolio.*'
             ]);
-
-
         $this->addFilterToMap('image_id', 'AHT_Images.image_id');
+        /*var_dump($this->getSelect()->__toString());
+        die();*/
         return $this;
     }
 }
