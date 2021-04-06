@@ -90,7 +90,7 @@ class Portfolio extends \Magento\Framework\Model\AbstractModel implements Identi
     }
     public function setPrice($price)
     {
-        $this->getData('price', $price);
+        $this->setData('price', $price);
     } 
 
     public function getContent()
